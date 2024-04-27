@@ -15,17 +15,17 @@ public class Numero extends JButton {
          if(Calculadora.resultado.getText().equals("ERROR!")){
             Calculadora.resultado.setText("");
         }
-         switch(Calculadora.status){
+         switch(Calculadora.getStatus()){
             case Calculadora.Estados.IGNORADO:
-                Calculadora.status = Calculadora.Estados.INICIO;
+                Calculadora.setStatus(Calculadora.Estados.INICIO);
             case Calculadora.Estados.INICIO:
-                Calculadora.status = Calculadora.Estados.NUM1;
+                 Calculadora.setStatus(Calculadora.Estados.NUM1);
                 if(Calculadora.vec[0] == null) {Calculadora.vec[0] = (valor); break;}
             case Calculadora.Estados.NUM1:
                 Calculadora.vec[0] = Calculadora.vec[0].concat(valor);
                 break;
             case Calculadora.Estados.OPERADOR:
-                Calculadora.status = Calculadora.Estados.NUM2;
+                Calculadora.setStatus(Calculadora.Estados.NUM2);
                 Calculadora.vec[1] = (valor);
                 break;
             case Calculadora.Estados.NUM2:

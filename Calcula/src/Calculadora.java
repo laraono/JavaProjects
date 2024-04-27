@@ -16,7 +16,7 @@ public class Calculadora extends javax.swing.JFrame implements ActionListener {
         } else if(e.getSource() instanceof Operador){
             Operador.clicaOperador(e);
         }
-        
+        System.out.print(status);
     }
     public enum Estados {
        INICIO,
@@ -27,10 +27,18 @@ public class Calculadora extends javax.swing.JFrame implements ActionListener {
        IGNORADO,
        LIMPAR
    } 
-    static Calculadora.Estados status = Calculadora.Estados.INICIO;
-    static String[] vec = new String[3];
+    static private Calculadora.Estados status = Calculadora.Estados.INICIO;
+    static String[] vec = {"","",""};
     static int total = 0;
     static JTextArea resultado;
+
+    public static Estados getStatus() {
+        return status;
+    }
+
+    public static void setStatus(Estados status) {
+        Calculadora.status = status;
+    }
 
     public Calculadora() {
                 
