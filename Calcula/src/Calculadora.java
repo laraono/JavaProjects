@@ -7,23 +7,14 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-
-/**
- *
- * @author isaon
- */
 public class Calculadora extends javax.swing.JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() instanceof Numero){
-        Numero.clicaNumero(e);
+            Numero.clicaNumero(e);
         } else if(e.getSource() instanceof Operador){
-        Operador.clicaOperador(e);
+            Operador.clicaOperador(e);
         }
         
     }
@@ -36,13 +27,11 @@ public class Calculadora extends javax.swing.JFrame implements ActionListener {
        IGNORADO,
        LIMPAR
    } 
-    static Estados status = Estados.INICIO;
+    static Calculadora.Estados status = Calculadora.Estados.INICIO;
     static String[] vec = new String[3];
     static int total = 0;
     static JTextArea resultado;
-    /**
-     * Creates new form Calculadora
-     */
+
     public Calculadora() {
                 
         resultado = new JTextArea();
@@ -55,19 +44,17 @@ public class Calculadora extends javax.swing.JFrame implements ActionListener {
         res.setLayout(new GridLayout(1,1));
         this.add(botoes, BorderLayout.CENTER);
         
-       Numero.result = resultado;
-       Operador.result = resultado;
-       for(int i=1; i<=16;i++){
-            if(i%4 == 0 || i == 13 || i == 15){
-               botao[i-1] = new Operador();
-               
-            } else{
-                botao[i-1] = new Numero();
-            }
-            botao[i-1].addActionListener(this);
-                botoes.add(botao[i-1]);
-                
-        } 
+        for(int i=1; i<=16;i++){
+             if(i%4 == 0 || i == 13 || i == 15){
+                botao[i-1] = new Operador();
+
+             } else{
+                 botao[i-1] = new Numero();
+             }
+             botao[i-1].addActionListener(this);
+                 botoes.add(botao[i-1]);
+
+         } 
         
         botoes.setLayout(new GridLayout(4,4,2,2));
         this.setLayout(new GridLayout(2,1));
@@ -81,28 +68,30 @@ public class Calculadora extends javax.swing.JFrame implements ActionListener {
         int n2;
         n2 = Integer.parseInt(vec[1]);
         try{
-       switch(vec[2]){
-           case "+" -> total = n1+n2;
-           case "-" -> total = n1-n2;
-           case "*" -> total = n1*n2;
-           case "/" -> total = n1/n2;
-            
-       } 
+            switch(vec[2]){
+                case "+" -> total = n1+n2;
+                case "-" -> total = n1-n2;
+                case "*" -> total = n1*n2;
+                case "/" -> total = n1/n2;
+
+            } 
       
-      Calculadora.resultado.setText(String.valueOf(total));
-      Calculadora.vec[0] = String.valueOf(total);          
-      Calculadora.vec[1] = "";
-      Calculadora.vec[2] = "";
-      Calculadora.status = Calculadora.Estados.NUM1;
+            Calculadora.resultado.setText(String.valueOf(total));
+            setVetor(String.valueOf(total),"","",Calculadora.Estados.NUM1);
         }
         catch(Exception e){
             Calculadora.resultado.setText("ERROR!");
-            Calculadora.vec[0] = "";
-            Calculadora.vec[1] = "";
-            Calculadora.vec[2] = "";
-            Calculadora.status = Calculadora.Estados.NUM1;
-        }
+            setVetor("","","",Calculadora.Estados.NUM1);
+         }
     }
+    
+    static void setVetor(String vet1,String vet2,String vet3,Calculadora.Estados estado){
+        Calculadora.vec[0] = vet1;
+        Calculadora.vec[1] = vet2;
+        Calculadora.vec[2] = vet3;
+        Calculadora.status = estado;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -156,10 +145,8 @@ public class Calculadora extends javax.swing.JFrame implements ActionListener {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Calculadora().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Calculadora().setVisible(true);
         });
     }
 
