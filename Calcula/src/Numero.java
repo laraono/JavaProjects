@@ -16,22 +16,33 @@ public class Numero extends JButton {
             Calculadora.resultado.setText("");
         }
          switch(Calculadora.getStatus()){
+            case Calculadora.Estados.RESULTADO:
+                Calculadora.setVetor(valor, "", "", Calculadora.Estados.NUM1);
+                Calculadora.resultado.setText(valor);
+                break;
             case Calculadora.Estados.IGNORADO:
                 Calculadora.setStatus(Calculadora.Estados.INICIO);
             case Calculadora.Estados.INICIO:
-                 Calculadora.setStatus(Calculadora.Estados.NUM1);
-                if(Calculadora.vec[0] == null) {Calculadora.vec[0] = (valor); break;}
+                Calculadora.setStatus(Calculadora.Estados.NUM1);
+                if(Calculadora.vec[0] == null) {Calculadora.vec[0] = 
+                    (valor); 
+                    Calculadora.resultado.setText(Calculadora.resultado.getText()+valor);
+                    break;
+                }
             case Calculadora.Estados.NUM1:
                 Calculadora.vec[0] = Calculadora.vec[0].concat(valor);
+                Calculadora.resultado.setText(Calculadora.resultado.getText()+valor);
                 break;
             case Calculadora.Estados.OPERADOR:
                 Calculadora.setStatus(Calculadora.Estados.NUM2);
                 Calculadora.vec[1] = (valor);
+                Calculadora.resultado.setText(Calculadora.resultado.getText()+valor);
                 break;
             case Calculadora.Estados.NUM2:
                 Calculadora.vec[1] = Calculadora.vec[1].concat(valor);
+                Calculadora.resultado.setText(Calculadora.resultado.getText()+valor);
+
          }
-           Calculadora.resultado.setText(Calculadora.resultado.getText()+valor);
      }
      }
 

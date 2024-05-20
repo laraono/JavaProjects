@@ -1,9 +1,14 @@
+/* Feito por
+Gabriela Morais Gandine 
+Lara Ono Glufke Reis
 
+*/
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -24,8 +29,7 @@ public class Calculadora extends javax.swing.JFrame implements ActionListener {
        OPERADOR,
        NUM2,
        RESULTADO,
-       IGNORADO,
-       LIMPAR
+       IGNORADO
    } 
     static private Calculadora.Estados status = Calculadora.Estados.INICIO;
     static String[] vec = {"","",""};
@@ -41,34 +45,31 @@ public class Calculadora extends javax.swing.JFrame implements ActionListener {
     }
 
     public Calculadora() {
-                
         resultado = new JTextArea();
         JPanel res = new JPanel();
         JPanel botoes = new JPanel();
-        JButton[] botao;
-        botao = new JButton[16];
+        JButton[] botao = new JButton[16];
+
         res.add(resultado);
+        res.setLayout(new GridLayout(1, 1));
+        
+        for (int i = 1; i <= 16; i++) {
+            if (i % 4 == 0 || i == 13 || i == 15) {
+                botao[i - 1] = new Operador();
+            } else {
+                botao[i - 1] = new Numero();
+            }
+            botao[i - 1].addActionListener(this);
+            botoes.add(botao[i - 1]);
+        }
+        botoes.setLayout(new GridLayout(4, 4, 2, 2));
+
+        this.setLayout(new BorderLayout());
         this.add(res, BorderLayout.NORTH);
-        res.setLayout(new GridLayout(1,1));
         this.add(botoes, BorderLayout.CENTER);
-        
-        for(int i=1; i<=16;i++){
-             if(i%4 == 0 || i == 13 || i == 15){
-                botao[i-1] = new Operador();
-
-             } else{
-                 botao[i-1] = new Numero();
-             }
-             botao[i-1].addActionListener(this);
-                 botoes.add(botao[i-1]);
-
-         } 
-        
-        botoes.setLayout(new GridLayout(4,4,2,2));
-        this.setLayout(new GridLayout(2,1));
         this.pack();
-
-        initComponents();
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
     }
     static void calcularResultado() {
         int n1;
@@ -85,11 +86,11 @@ public class Calculadora extends javax.swing.JFrame implements ActionListener {
             } 
       
             Calculadora.resultado.setText(String.valueOf(total));
-            setVetor(String.valueOf(total),"","",Calculadora.Estados.NUM1);
+            setVetor(String.valueOf(total),"","",Calculadora.Estados.RESULTADO);
         }
         catch(Exception e){
             Calculadora.resultado.setText("ERROR!");
-            setVetor("","","",Calculadora.Estados.NUM1);
+            setVetor("","","",Calculadora.Estados.RESULTADO);
          }
     }
     
