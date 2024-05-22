@@ -14,7 +14,7 @@ import javax.swing.JButton;
 public class Casas extends JButton {
     int posX, posY, vizinhos = 0;
     Boolean bombas, revelado =false;
-
+    String flag ="";
     public Casas(int posX, int posY, Boolean bombas) {
         this.posX = posX;
         this.posY = posY;
@@ -56,7 +56,7 @@ public class Casas extends JButton {
     public void revelaCasa(){
             if(this.vizinhos > 0){
                this.setText(Integer.toString(this.vizinhos));
-            }
+            
             switch(this.vizinhos){
                     case 1:this.setForeground(Color.cyan);break;
                     case 2:this.setForeground(Color.YELLOW);break;
@@ -67,6 +67,7 @@ public class Casas extends JButton {
                     case 7:this.setForeground(Color.white);break;
                     case 8:this.setForeground(Color.ORANGE);break;
                     case 9:this.setForeground(Color.gray);break;
+            }
             }
             if(!this.bombas){
             this.setBackground(Color.black);

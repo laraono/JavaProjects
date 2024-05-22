@@ -34,10 +34,15 @@ public class JogoFrame extends javax.swing.JFrame implements ActionListener {
         dificilBtn.addActionListener(this);
         ajudaBtn.addActionListener(this);
         reset.addActionListener(this);
-       
+       this.bombas.setText("0");
        
     }
 
+    public void vitoria() {
+        winDialog ganhou = new winDialog(this, true);
+        ganhou.setVisible(true);
+    }
+    
     public int getNivel() {
         return nivel;
     }
@@ -50,6 +55,7 @@ public class JogoFrame extends javax.swing.JFrame implements ActionListener {
         this.nivel = nivel;
         tabuleiro = new jogoTabuleiro(this,this.nivel);
         setBandeiras(tabuleiro.getNumBombas());
+        this.bombas.setText("0");
         this.campo.add(this.tabuleiro);
         revalidate();
         repaint();
@@ -61,8 +67,9 @@ public class JogoFrame extends javax.swing.JFrame implements ActionListener {
         
     }
     
-    public void preparaFim(){
+    public void preparaFim(int corretas){
         this.reset.setText(":(");
+        this.bombas.setText(Integer.toString(corretas));
     }
     
     
@@ -78,6 +85,7 @@ public class JogoFrame extends javax.swing.JFrame implements ActionListener {
         campo = new javax.swing.JPanel();
         reset = new javax.swing.JButton();
         bandeiras = new javax.swing.JTextField();
+        bombas = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         facilBtn = new javax.swing.JMenuItem();
@@ -94,6 +102,8 @@ public class JogoFrame extends javax.swing.JFrame implements ActionListener {
         reset.setActionCommand("reset");
 
         bandeiras.setEnabled(false);
+
+        bombas.setEnabled(false);
 
         jMenu1.setText("Jogo");
 
@@ -124,10 +134,13 @@ public class JogoFrame extends javax.swing.JFrame implements ActionListener {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(188, 188, 188)
+                        .addContainerGap()
+                        .addComponent(bandeiras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 373, Short.MAX_VALUE)
                         .addComponent(reset, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 657, Short.MAX_VALUE)
-                        .addComponent(bandeiras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(393, 393, 393)
+                        .addComponent(bombas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9))
                     .addComponent(campo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -137,7 +150,8 @@ public class JogoFrame extends javax.swing.JFrame implements ActionListener {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(reset)
-                    .addComponent(bandeiras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bandeiras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bombas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campo, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -186,6 +200,7 @@ public class JogoFrame extends javax.swing.JFrame implements ActionListener {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu ajudaBtn;
     private javax.swing.JTextField bandeiras;
+    private javax.swing.JTextField bombas;
     private javax.swing.JPanel campo;
     private javax.swing.JMenuItem dificilBtn;
     private javax.swing.JMenuItem facilBtn;

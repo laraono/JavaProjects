@@ -73,8 +73,12 @@ public class jogoTabuleiro extends javax.swing.JPanel implements MouseListener{
         for(int i = 0; i < numBombas; i++){
             int x = gera.nextInt(altura);
             int y = gera.nextInt(largura);
+            while(casa[x][y].bombas){
+            x = gera.nextInt(altura);
+            y = gera.nextInt(largura);
+            }
             casa[x][y].bombas = true;
-            casa[x][y].addMouseListener(this);
+           
             setVizinhos(x,y);
         }
     }
@@ -93,15 +97,20 @@ public class jogoTabuleiro extends javax.swing.JPanel implements MouseListener{
     }
     
     private void revelarBombas(){
+        int corretas = 0;
         for(int i = 0; i< altura; i++){
             for(int j = 0; j< largura; j++){
                 if(casa[i][j].bombas){
                     casa[i][j].setText("*");
                     casa[i][j].setBackground(Color.red);
+                    if(casa[i][j].flag.equals("+")){
+                        corretas++;
+                    }
                 }
+
             }
         }
-        
+                     frame.preparaFim(corretas);
     }
 
     public int getNumBombas() {
@@ -111,10 +120,11 @@ public class jogoTabuleiro extends javax.swing.JPanel implements MouseListener{
   private void recursaoVizinhos(int x, int y){
         for(int i = -1; i <= 1; i++){
             for(int j = -1; j <= 1; j++){
-                if(x+i >= 0 && y+j >= 0 && x+i < altura && y+j < largura && !casa[x+i][y+j].bombas && !casa[x+i][y+j].getText().equals("+")){
+                if(x+i >= 0 && y+j >= 0 && x+i < altura && y+j < largura && !casa[x+i][y+j].bombas){
                     casa[x+i][y+j].revelaCasa();
-                    if(casa[x+i][y+j].vizinhos == 0){
+                    if(casa[x+i][y+j].vizinhos == 0 && !casa[x+i][y+j].revelado && !casa[x+i][y+j].getText().equals("+")){
                         recursaoVizinhos(x+i,y+j);
+                        break;
                     }
                 }
                 
@@ -151,26 +161,32 @@ public class jogoTabuleiro extends javax.swing.JPanel implements MouseListener{
         if(fim == false){
         if(e.getComponent() instanceof Casas){
             Casas btn = (Casas) e.getComponent();
-        if(SwingUtilities.isRightMouseButton(e)){
-           if(this.flags < this.numBombas && btn.getText().equals("")){
-           btn.setText("+");
-           this.flags++;
-           frame.setBandeiras(this.numBombas - this.flags);
-           }
-           else if(btn.getText().equals("+")){
-           btn.setText("");
-           this.flags--;
-           frame.setBandeiras(this.numBombas - this.flags);
-           }
+        if (SwingUtilities.isRightMouseButton(e)) {
+            if (this.flags <= this.numBombas && btn.getText().equals("")) {
+                        this.flags++;
+                        btn.flag = "+";
+            }
+            else if (this.flags > 0 && btn.getText().equals("+")){
+                this.flags--;
+                btn.flag = "";
+            }
+            frame.setBandeiras(this.numBombas - this.flags);
+            btn.setText(btn.flag);
+            if (this.flags == this.numBombas) {
+                verificaVencer();
+            }
+        
         }
-        if(SwingUtilities.isLeftMouseButton(e)){
+
+        else if(SwingUtilities.isLeftMouseButton(e)){
+                        
             if(!btn.revelado){
             btn.revelaCasa();
             if(btn.bombas){
              if(!this.inicio){
              fim = true;
              revelarBombas();
-             frame.preparaFim();
+
              } else {
              frame.refazTabuleiro(frame.getNivel());
              }
@@ -178,10 +194,11 @@ public class jogoTabuleiro extends javax.swing.JPanel implements MouseListener{
             else {
               recursaoVizinhos(btn.posX,btn.posY);
             }
-            }
             if(this.inicio){
                 this.inicio = false;
             }
+            }
+            
         }
         }
         }
@@ -206,6 +223,24 @@ public class jogoTabuleiro extends javax.swing.JPanel implements MouseListener{
     public void mouseExited(MouseEvent e) {
     
     }
+
+    private void verificaVencer() {
+        Boolean win = true;
+        for(int i = 0; i< altura; i++){
+            for(int j = 0; j< largura; j++){
+                if(casa[i][j].bombas){
+                    if(!casa[i][j].getText().equals("+")){
+                        win = false;
+                        break;
+                    }
+                }
+            }
+        }
+        if(win == true){
+            frame.vitoria();
+        }
+    }
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

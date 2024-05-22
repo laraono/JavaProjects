@@ -65,10 +65,13 @@
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="188" max="-2" attributes="0"/>
-                      <Component id="reset" min="-2" pref="38" max="-2" attributes="0"/>
-                      <EmptySpace pref="657" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="bandeiras" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="373" max="32767" attributes="0"/>
+                      <Component id="reset" min="-2" pref="38" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="393" max="-2" attributes="0"/>
+                      <Component id="bombas" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                   </Group>
                   <Component id="campo" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -83,6 +86,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="reset" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="bandeiras" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="bombas" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="campo" min="-2" pref="459" max="-2" attributes="0"/>
@@ -103,6 +107,11 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="bandeiras">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="bombas">
       <Properties>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
