@@ -4,19 +4,18 @@
  */
 package jogocampominado;
 
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JLabel;
+
 
 /**
  *
  * @author isaon
  */
 public class JogoFrame extends javax.swing.JFrame implements ActionListener {
-    ajudaDialog ajudaWindow;
     jogoTabuleiro tabuleiro;
     int nivel = 1;
+    ajudaDialog ajuda;
 
     /**
      * Creates new form JogoFrame
@@ -28,11 +27,11 @@ public class JogoFrame extends javax.swing.JFrame implements ActionListener {
         setBandeiras(tabuleiro.getNumBombas());
         this.campo.add(tabuleiro);
         //this.campo.setLayout(new GridLayout(1,1));
-        ajudaWindow = new ajudaDialog(this,true);
+        ajuda = new ajudaDialog(this,true);
         facilBtn.addActionListener(this);
         medioBtn.addActionListener(this);
         dificilBtn.addActionListener(this);
-        ajudaBtn.addActionListener(this);
+        instrucoesBtn.addActionListener(this);
         reset.addActionListener(this);
        this.bombas.setText("0");
        
@@ -62,7 +61,7 @@ public class JogoFrame extends javax.swing.JFrame implements ActionListener {
         
     }
     
-    public void setBandeiras(int valor){
+    void setBandeiras(int valor){
         this.bandeiras.setText(Integer.toString(valor));
         
     }
@@ -92,6 +91,7 @@ public class JogoFrame extends javax.swing.JFrame implements ActionListener {
         medioBtn = new javax.swing.JMenuItem();
         dificilBtn = new javax.swing.JMenuItem();
         ajudaBtn = new javax.swing.JMenu();
+        instrucoesBtn = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -123,6 +123,11 @@ public class JogoFrame extends javax.swing.JFrame implements ActionListener {
 
         ajudaBtn.setText("Ajuda");
         ajudaBtn.setActionCommand("ajuda");
+
+        instrucoesBtn.setText("Instruções de jogo");
+        instrucoesBtn.setActionCommand("instrucoes");
+        ajudaBtn.add(instrucoesBtn);
+
         jMenuBar1.add(ajudaBtn);
 
         setJMenuBar(jMenuBar1);
@@ -136,7 +141,7 @@ public class JogoFrame extends javax.swing.JFrame implements ActionListener {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(bandeiras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 373, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 584, Short.MAX_VALUE)
                         .addComponent(reset, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(393, 393, 393)
                         .addComponent(bombas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -154,7 +159,7 @@ public class JogoFrame extends javax.swing.JFrame implements ActionListener {
                     .addComponent(bombas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campo, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -188,10 +193,8 @@ public class JogoFrame extends javax.swing.JFrame implements ActionListener {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new JogoFrame().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new JogoFrame().setVisible(true);
         });
     }
     
@@ -204,6 +207,7 @@ public class JogoFrame extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JPanel campo;
     private javax.swing.JMenuItem dificilBtn;
     private javax.swing.JMenuItem facilBtn;
+    private javax.swing.JMenuItem instrucoesBtn;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem medioBtn;
@@ -213,10 +217,11 @@ public class JogoFrame extends javax.swing.JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch(e.getActionCommand()){
-            case "facil": refazTabuleiro(1); break; // setGame
-            case "medio": refazTabuleiro(2); break;
-            case "dificil": refazTabuleiro(3); break; 
-            case "reset": refazTabuleiro(nivel);break;
+            case "facil" -> refazTabuleiro(1);
+            case "medio" -> refazTabuleiro(2);
+            case "dificil" -> refazTabuleiro(3);
+            case "reset" -> refazTabuleiro(nivel);
+            case "instrucoes" -> ajuda.setVisible(true);
         }
     }
 }

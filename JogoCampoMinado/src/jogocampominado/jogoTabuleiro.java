@@ -25,6 +25,7 @@ public class jogoTabuleiro extends javax.swing.JPanel implements MouseListener{
     JogoFrame frame;
     /**
      * Creates new form jogoTabuleiro
+     * @param quadro
      */
     public jogoTabuleiro(JogoFrame quadro) {
         initComponents();
@@ -45,11 +46,17 @@ public class jogoTabuleiro extends javax.swing.JPanel implements MouseListener{
         }
     }
 
-    public void setNivel(int nivel){
+    private void setNivel(int nivel){
         switch(nivel){
-            case 1: numBombas = 10; altura = 9; largura = 9; break;
-            case 2: numBombas = 40; altura = 16; largura = 16; break;
-            case 3: numBombas = 99; altura = 16; largura = 30; break;
+            case 1 -> {
+                numBombas = 10; altura = 9; largura = 9;
+            }
+            case 2 -> {
+                numBombas = 40; altura = 16; largura = 16;
+            }
+            case 3 -> {
+                numBombas = 99; altura = 16; largura = 30;
+            }
         }
         casa = new Casas[altura][largura];
     }
@@ -134,7 +141,43 @@ public class jogoTabuleiro extends javax.swing.JPanel implements MouseListener{
     
     }
     
+  private void clicaFlag(Casas btn){
+      if (this.flags <= this.numBombas && btn.getText().equals("")) {
+                        this.flags++;
+                        btn.flag = "+";
+            }
+            else if (this.flags > 0 && btn.getText().equals("+")){
+                this.flags--;
+                btn.flag = "";
+            }
+            frame.setBandeiras(this.numBombas - this.flags);
+            btn.setText(btn.flag);
+            if (this.flags == this.numBombas) {
+                verificaVencer();
+            }
+  }
     
+  private void clicaCasa(Casas btn){
+      if(!btn.revelado){
+            btn.revelaCasa();
+            if(btn.bombas){
+             if(!this.inicio){
+             fim = true;
+             revelarBombas();
+
+             } else {
+             frame.refazTabuleiro(frame.getNivel());
+             }
+            } 
+            else {
+              recursaoVizinhos(btn.posX,btn.posY);
+            }
+            if(this.inicio){
+                this.inicio = false;
+            }
+            }
+            
+  }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -162,43 +205,10 @@ public class jogoTabuleiro extends javax.swing.JPanel implements MouseListener{
         if(e.getComponent() instanceof Casas){
             Casas btn = (Casas) e.getComponent();
         if (SwingUtilities.isRightMouseButton(e)) {
-            if (this.flags <= this.numBombas && btn.getText().equals("")) {
-                        this.flags++;
-                        btn.flag = "+";
-            }
-            else if (this.flags > 0 && btn.getText().equals("+")){
-                this.flags--;
-                btn.flag = "";
-            }
-            frame.setBandeiras(this.numBombas - this.flags);
-            btn.setText(btn.flag);
-            if (this.flags == this.numBombas) {
-                verificaVencer();
-            }
-        
+            this.clicaFlag(btn);
         }
-
         else if(SwingUtilities.isLeftMouseButton(e)){
-                        
-            if(!btn.revelado){
-            btn.revelaCasa();
-            if(btn.bombas){
-             if(!this.inicio){
-             fim = true;
-             revelarBombas();
-
-             } else {
-             frame.refazTabuleiro(frame.getNivel());
-             }
-            } 
-            else {
-              recursaoVizinhos(btn.posX,btn.posY);
-            }
-            if(this.inicio){
-                this.inicio = false;
-            }
-            }
-            
+            this.clicaCasa(btn);
         }
         }
         }

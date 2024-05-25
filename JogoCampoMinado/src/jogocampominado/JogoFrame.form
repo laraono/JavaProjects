@@ -34,6 +34,14 @@
             <Property name="text" type="java.lang.String" value="Ajuda"/>
             <Property name="actionCommand" type="java.lang.String" value="ajuda"/>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="instrucoesBtn">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Instru&#xe7;&#xf5;es de jogo"/>
+                <Property name="actionCommand" type="java.lang.String" value="instrucoes"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
         </Menu>
       </SubComponents>
     </Menu>
@@ -67,7 +75,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="bandeiras" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="373" max="32767" attributes="0"/>
+                      <EmptySpace pref="584" max="32767" attributes="0"/>
                       <Component id="reset" min="-2" pref="38" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="393" max="-2" attributes="0"/>
                       <Component id="bombas" min="-2" max="-2" attributes="0"/>
@@ -90,7 +98,7 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="campo" min="-2" pref="459" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="23" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
